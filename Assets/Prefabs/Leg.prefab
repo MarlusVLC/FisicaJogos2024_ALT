@@ -719,7 +719,7 @@ MonoBehaviour:
     m_ChainRotationWeight: 1
     m_TipRotationWeight: 1
     m_MaxIterations: 15
-    m_Tolerance: 0.0001
+    m_Tolerance: 0.01
     m_MaintainTargetPositionOffset: 0
     m_MaintainTargetRotationOffset: 0
 --- !u!1 &1545134541800773078

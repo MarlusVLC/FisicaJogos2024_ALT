@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 public class LegsManager : MonoBehaviour
@@ -43,5 +44,11 @@ public class LegsManager : MonoBehaviour
                 return true;
         }
         return false;
+    }
+    
+    public Vector3 GetFeetMediumPos()
+    {
+        var sum = legGroups.Aggregate(Vector3.zero, (current, leg) => current + leg.GetFeetMediumPos());
+        return sum / legGroups.Length;
     }
 }

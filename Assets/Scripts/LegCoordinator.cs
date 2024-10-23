@@ -21,9 +21,10 @@ public class LegCoordinator : MonoBehaviour
     private float CurrentTargetSqrDistance => Vector3.SqrMagnitude(intendedTarget.position - currentFeetTarget.position);
     private bool IsWithinMovementDistance => CurrentTargetSqrDistance >= maximumTargetDistance * maximumTargetDistance;
     private bool ShouldStopLeg => MovementCompletion >= 0.99f;
-    
+
     public bool IsMoving { private set; get; }
     public float MovementCompletion => legMovementTime / legMovementDuration;
+    public Transform CurrentFeetTarget => currentFeetTarget;
 
     private void Start()
     {
