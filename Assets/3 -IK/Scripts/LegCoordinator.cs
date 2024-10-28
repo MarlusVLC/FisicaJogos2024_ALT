@@ -4,12 +4,12 @@ using UnityEngine.Animations.Rigging;
 
 public class LegCoordinator : MonoBehaviour
 {
-    [SerializeField] private bool relocateLegBase = true;
-    [SerializeField] private Transform legBase = null!;
+    // [SerializeField] private bool relocateLegBase = true;
+    // [SerializeField] private Transform legBase = null!;
     [SerializeField] private Transform intendedTarget = null!;
     [SerializeField] private float maximumTargetDistance;
-    [SerializeField] private AnimationCurve legMovementCurve = null!;
     [Min(0.0001f)][SerializeField] private float legMovementDuration;
+    [SerializeField] private AnimationCurve legMovementCurve = null!;
     [SerializeField] private AnimationCurve tipRiseCurve = null!;
     [Header("Debug")] 
     [SerializeField] private bool enableDebug = true;
@@ -17,18 +17,18 @@ public class LegCoordinator : MonoBehaviour
     [ReadOnly][SerializeField] private Vector3 _currentTargetToBaseOffset;
 
     private ChainIKConstraint _ikConstraint = null!;
-    private Transform currentFeetTarget = null!;
+    private Transform _currentFeetTarget = null!;
     private Vector3 _lastStableFeetTarget;
     private LegsManager? _optionalManager;
     public LegGroup? OptionalGroup { private set; get; }
  
-    private float CurrentTargetSqrDistance => Vector3.SqrMagnitude(intendedTarget.position - currentFeetTarget.position);
+    private float CurrentTargetSqrDistance => Vector3.SqrMagnitude(intendedTarget.position - _currentFeetTarget.position);
     private bool IsWithinMovementDistance => CurrentTargetSqrDistance >= maximumTargetDistance * maximumTargetDistance;
     private bool ShouldStopLeg => MovementCompletion >= 0.99f;
 
     public bool IsMoving { private set; get; }
     public float MovementCompletion => legMovementTime / legMovementDuration;
-    public Transform CurrentFeetTarget => currentFeetTarget;
+    public Transform CurrentFeetTarget => _currentFeetTarget;
 
     private void Start()
     {
@@ -37,9 +37,9 @@ public class LegCoordinator : MonoBehaviour
         {
             Debug.LogError($"No ChainIKConstraint component found in {gameObject.name}'s children");
         }
-        currentFeetTarget = _ikConstraint.data.target;
-        currentFeetTarget.position = intendedTarget.position;
-        _currentTargetToBaseOffset = legBase.position - currentFeetTarget.position;
+        _currentFeetTarget = _ikConstraint.data.target;
+        _currentFeetTarget.position = intendedTarget.position;
+        // _currentTargetToBaseOffset = legBase.position - currentFeetTarget.position;
     }
 
     private void FixedUpdate()
@@ -47,7 +47,7 @@ public class LegCoordinator : MonoBehaviour
         if (ShouldStartMoving())
         {
             legMovementTime = 0f;
-            _lastStableFeetTarget = currentFeetTarget.position;
+            _lastStableFeetTarget = _currentFeetTarget.position;
             IsMoving = true;
         }
         
@@ -61,12 +61,13 @@ public class LegCoordinator : MonoBehaviour
 
         var tempPosition = Vector3.LerpUnclamped(_lastStableFeetTarget, intendedTarget.position,
             legMovementCurve.Evaluate(MovementCompletion));
+        
         tempPosition.y += tipRiseCurve.Evaluate(MovementCompletion); //Colocar movimento para cima
-        currentFeetTarget.position = tempPosition;
-        if (relocateLegBase)
-        {
-            RelocateLegBase(y: (currentFeetTarget.position + _currentTargetToBaseOffset).y); 
-        }
+        _currentFeetTarget.position = tempPosition;
+        // if (relocateLegBase)
+        // {
+        //     RelocateLegBase(y: (currentFeetTarget.position + _currentTargetToBaseOffset).y); 
+        // }
     }
 
     private bool ShouldStartMoving()
@@ -79,14 +80,14 @@ public class LegCoordinator : MonoBehaviour
         return should;
     }
 
-    private void RelocateLegBase(float? x = null, float? y = null, float? z = null)
-    {
-        var temp = legBase.position;
-        temp.x = x ?? temp.x;
-        temp.y = y ?? temp.y;
-        temp.z = z ?? temp.z;
-        legBase.position = temp;
-    }
+    // private void RelocateLegBase(float? x = null, float? y = null, float? z = null)
+    // {
+    //     var temp = legBase.position;
+    //     temp.x = x ?? temp.x;
+    //     temp.y = y ?? temp.y;
+    //     temp.z = z ?? temp.z;
+    //     legBase.position = temp;
+    // }
     
     public void LinkToSystem(LegsManager manager, LegGroup group)
     {
@@ -99,6 +100,6 @@ public class LegCoordinator : MonoBehaviour
         if (enableDebug == false)
             return;
         Gizmos.color = IsWithinMovementDistance ? Color.red : Color.green;
-        Gizmos.DrawLine(currentFeetTarget.position, intendedTarget.position); 
+        Gizmos.DrawLine(_currentFeetTarget.position, intendedTarget.position); 
     }
 }

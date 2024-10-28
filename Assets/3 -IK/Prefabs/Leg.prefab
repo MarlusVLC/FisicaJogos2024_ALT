@@ -629,11 +629,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14fb0e4532d4b148570ad132e8b481b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  relocateLegBase: 0
-  legBase: {fileID: 1545134541376754489}
-  currentFeetTarget: {fileID: 0}
   intendedTarget: {fileID: 2995198544542596994}
   maximumTargetDistance: 3
+  legMovementDuration: 0.5
   legMovementCurve:
     serializedVersion: 2
     m_Curve:
@@ -658,7 +656,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  legMovementDuration: 0.5
   tipRiseCurve:
     serializedVersion: 2
     m_Curve:
@@ -701,7 +698,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  enableDebug: 1
+  enableDebug: 0
   legMovementTime: 0
   _currentTargetToBaseOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &1545134541438892455
@@ -1103,13 +1100,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5423331452513215897}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfe4b13d551eaca438567f7bfd25a8c2, type: 3}
+  m_Script: {fileID: 11500000, guid: a3ccd6e38d903b740bb1d505f7096d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  repositionOffset: {x: 0, y: 0.5, z: 0}
-  detectionOffset: {x: 0, y: 10, z: 0}
+  detectionOffsetY: 10
+  repositionOffsetY: 0.5
+  maxDetectionDistance: 20
   surfaceMask:
     serializedVersion: 2
     m_Bits: 8
-  maxDetectionDistance: 20
   enableDebug: 1
