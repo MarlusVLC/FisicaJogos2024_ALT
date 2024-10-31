@@ -8,6 +8,7 @@ public class InputMover : MonoBehaviour
    private void Update()
    {
       transform.Translate(transform.InverseTransformDirection(transform.forward) * (Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime));
+      
       transform.Rotate(0f, Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime, 0f);
    }
 
