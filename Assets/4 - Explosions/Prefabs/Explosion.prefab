@@ -128,6 +128,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dead0aea30145a4790fb7a5fa5012e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _targetLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  _obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 128
   _visual: {fileID: 312943427846373061}
   _radius: 10
   _time: 1
@@ -145,7 +151,7 @@ MonoBehaviour:
       outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0
+      value: 0.5
       inSlope: 0.14777239
       outSlope: 0.14777239
       tangentMode: 0
@@ -155,4 +161,29 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _maximumForce: 100
+  _maximumForce: 200
+  _damageAttenuationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.5
+      inSlope: 0.14777239
+      outSlope: 0.14777239
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.16494799
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _maximumDamage: 100

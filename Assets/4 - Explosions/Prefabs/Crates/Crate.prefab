@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5676299521895690822}
   - component: {fileID: 4290698688924916872}
   - component: {fileID: 653080801684753611}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,3 +146,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cefb5bdc8526394ab29083351ecd396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maximumHealth: 100.2
