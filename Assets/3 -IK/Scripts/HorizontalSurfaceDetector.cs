@@ -10,9 +10,11 @@ public class HorizontalSurfaceDetector : MonoBehaviour
     [SerializeField] private bool enableDebug = true;
 
     private bool isDetectingSurface = false;
-    
     private Vector3 detectionOffset;
     private Vector3 repositionOffset;
+    
+    public bool IsDetectingSurface => isDetectingSurface;
+    public RaycastHit HitInfo;
 
     private void Awake()
     {
@@ -27,11 +29,11 @@ public class HorizontalSurfaceDetector : MonoBehaviour
             detectionOffset = new Vector3(0.0f, detectionOffsetY, 0.0f);
             repositionOffset = new Vector3(0.0f, repositionOffsetY, 0.0f);
         }
-        isDetectingSurface = Physics.Raycast(transform.position + detectionOffset, Vector3.down, out var hitInfo, maxDetectionDistance,
+        isDetectingSurface = Physics.Raycast(transform.position + detectionOffset, Vector3.down, out HitInfo, maxDetectionDistance,
             surfaceMask);
         if (isDetectingSurface)
         {
-            transform.position = hitInfo.point + repositionOffset;
+            transform.position = HitInfo.point + repositionOffset;
         }
     }
 

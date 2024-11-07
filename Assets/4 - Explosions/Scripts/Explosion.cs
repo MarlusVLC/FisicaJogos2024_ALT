@@ -51,22 +51,52 @@ public class Explosion : MonoBehaviour
         Vector3 direction = offset.normalized;
         float distance = offset.magnitude;
         float horizonReach = Mathf.InverseLerp(0, _radius, distance); //How close, percentually, is target from explosion radius
-        Debug.Log($"Horizon Reach for {target.name} = {horizonReach}");
+        // Debug.Log($"Horizon Reach for {target.name} = {horizonReach}");
         float force = _forceAttenuationCurve.Evaluate(horizonReach) * _maximumForce;
-        Debug.Log($"Applied Force for {target.name} = {force}");
+        // Debug.Log($"Applied Force for {target.name} = {force}");
         float damage = _damageAttenuationCurve.Evaluate(horizonReach) * _maximumDamage;
-        Debug.Log($"Applied Damage for {target.name} = {damage}");
+        // Debug.Log($"Applied Damage for {target.name} = {damage}");
 
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, distance, _obstacleLayers);
-        if (hits.Length > 0)
+        RaycastHit[] forwardHits = Physics.RaycastAll(transform.position, direction, distance, _obstacleLayers);
+        Debug.Log($"Direction = {direction} | Inverse direction = {-direction}");
+        RaycastHit[] inverseHits = Physics.RaycastAll(target.transform.position, -direction, distance, _obstacleLayers);
+
+        forwardHits = forwardHits.OrderBy(h => h.distance).ToArray();
+        if (forwardHits[^1].transform.gameObject.GetInstanceID() ==
+            target.GetComponent<Collider>().gameObject.GetInstanceID())
         {
-            foreach (var hit in hits)
+            forwardHits = forwardHits.Take(forwardHits.Length - 1).ToArray();
+        }
+        
+        if (forwardHits.Length != inverseHits.Length)
+        {
+            Debug.LogException(new UnityException(
+                "Forward and inverse explosion raycasts should have the same number of hits on the target."));
+            Debug.LogWarning($"Forward raycasts quantity = {forwardHits.Length} | Inverse quantity = {inverseHits.Length}");
+        }
+        
+        inverseHits = inverseHits.OrderBy(h => h.distance).ToArray();
+
+        for (int i = 0; i < forwardHits.Length; i++)
+        {
+            var hit = forwardHits[i];
+            Debug.LogWarning($"Forward Index #{i} - ID = {hit.colliderInstanceID}");
+            int inverseIndex = inverseHits.Length - 1 - i;
+            var inverseHit = inverseHits[inverseIndex];
+            Debug.LogWarning($" Inverse Index #{inverseIndex} - ID = {inverseHit.colliderInstanceID}");
+            if (hit.colliderInstanceID != inverseHit.colliderInstanceID)
             {
-                if (hit.collider.TryGetComponent(out Obstacle obstacle) == false)
-                    continue;
-                force *= obstacle.ForceAttenuation;
-                damage += obstacle.ForceAttenuation;
+                Debug.LogException(new UnityException("Colliders should be detected in the same object in the inverse order!"));
             }
+            if (hit.collider.TryGetComponent(out Obstacle obstacle) == false)
+                continue;
+            var obstacleSpaceCovering = Vector3.Distance(hit.point, inverseHit.point);
+            Debug.Log("Obstacle length = " + obstacleSpaceCovering);
+            float finalMultiplier = obstacle.ForceMultiplier / (obstacleSpaceCovering + 1);
+            // float finalMultiplier = obstacle.ForceMultiplier / Mathf.Exp(obstacleSpaceCovering);
+            Debug.Log("Force Multiplier = " + finalMultiplier); 
+            force *= finalMultiplier;
+            damage *= finalMultiplier;
         }
         
         target.ApplyForce(direction, force, damage, ForceMode.Impulse);

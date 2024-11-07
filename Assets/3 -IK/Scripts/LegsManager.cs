@@ -36,14 +36,7 @@ public class LegsManager : MonoBehaviour
 
     private bool AreOtherLegsMoving(LegGroup entryGroup)
     {
-        foreach (var legGroup in legGroups)
-        {
-            if (entryGroup == legGroup)
-                continue;
-            if (legGroup.IsAnyLegMoving())
-                return true;
-        }
-        return false;
+        return legGroups.Where(legGroup => entryGroup != legGroup).Any(legGroup => legGroup.IsAnyLegMoving());
     }
     
     public Vector3 GetFeetMediumPos()

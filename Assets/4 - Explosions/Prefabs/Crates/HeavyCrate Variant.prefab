@@ -8,6 +8,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 653080801684753611, guid: d6f1f1d0bb46823499483a76755821bd,
+        type: 3}
+      propertyPath: renderer
+      value: 
+      objectReference: {fileID: 3585396413374580773}
     - target: {fileID: 3126836060972142471, guid: d6f1f1d0bb46823499483a76755821bd,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -98,3 +103,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6f1f1d0bb46823499483a76755821bd, type: 3}
+--- !u!23 &3585396413374580773 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5703442850299351321, guid: d6f1f1d0bb46823499483a76755821bd,
+    type: 3}
+  m_PrefabInstance: {fileID: 9144365560718645564}
+  m_PrefabAsset: {fileID: 0}

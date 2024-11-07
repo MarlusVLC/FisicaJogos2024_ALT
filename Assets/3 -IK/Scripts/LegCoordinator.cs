@@ -8,6 +8,7 @@ public class LegCoordinator : MonoBehaviour
     // [SerializeField] private Transform legBase = null!;
     [SerializeField] private Transform intendedTarget = null!;
     [SerializeField] private float maximumTargetDistance;
+    [Min(1.0f)][SerializeField] private float maximumDistanceOverload;
     [Min(0.0001f)][SerializeField] private float legMovementDuration;
     [SerializeField] private AnimationCurve legMovementCurve = null!;
     [SerializeField] private AnimationCurve tipRiseCurve = null!;
@@ -23,7 +24,8 @@ public class LegCoordinator : MonoBehaviour
     public LegGroup? OptionalGroup { private set; get; }
  
     private float CurrentTargetSqrDistance => Vector3.SqrMagnitude(intendedTarget.position - _currentFeetTarget.position);
-    private bool IsWithinMovementDistance => CurrentTargetSqrDistance >= maximumTargetDistance * maximumTargetDistance;
+    private bool IsWithinMovementDistance => CurrentTargetSqrDistance >= maximumTargetDistance * maximumTargetDistance; 
+    private bool IsOutOfBounds => CurrentTargetSqrDistance/maximumDistanceOverload >= maximumTargetDistance * maximumTargetDistance;
     private bool ShouldStopLeg => MovementCompletion >= 0.99f;
 
     public bool IsMoving { private set; get; }
@@ -73,6 +75,7 @@ public class LegCoordinator : MonoBehaviour
     private bool ShouldStartMoving()
     {
         bool should = IsWithinMovementDistance;
+        if (IsOutOfBounds) return true;
         if (_optionalManager != null)
         {
             should &= _optionalManager.CanMoveLeg(this);

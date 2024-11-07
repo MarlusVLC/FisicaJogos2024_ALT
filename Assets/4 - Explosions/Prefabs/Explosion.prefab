@@ -133,7 +133,7 @@ MonoBehaviour:
     m_Bits: 64
   _obstacleLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 192
   _visual: {fileID: 312943427846373061}
   _radius: 10
   _time: 1
