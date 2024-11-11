@@ -189,8 +189,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   maximumDamage: 100
   showLogs: 1
-  showForceRays: 0
+  showForceRays: 1
   showDamageRays: 1
+  showObstacleSpheres: 0
 --- !u!82 &4527802245403769566
 AudioSource:
   m_ObjectHideFlags: 0

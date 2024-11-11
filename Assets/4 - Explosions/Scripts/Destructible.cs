@@ -27,8 +27,6 @@ public class Destructible : MonoBehaviour
         ApplyDamage(damage);
         if (showLogs) Debug.Log($"Final Applied Force for {name} = {force}");
         if (showLogs) Debug.Log($"Final Applied Damage for {name} = {damage}");
-        if (showLogs) Debug.Log($"RAY END for {name}");
-        if (showLogs) Debug.Log($"---------------------");
     }
 
     public void ApplyDamage(float damage)

@@ -29,17 +29,6 @@ namespace GeneralHelpers
             length = offset.magnitude;
             intensity = 1;
             this.isLastRay = isLastRay;
-
-        }
-        
-        public ModulatedRay(Vector3 origin, Vector3 direction, float length, float intensity, bool isLastRay = false)
-        {
-            this.origin = origin;
-            this.direction = direction;
-            this.length = length;
-            this.intensity = intensity;
-            this.isLastRay = isLastRay;
-
         }
 
         public Vector3 EndPoint
@@ -60,7 +49,7 @@ namespace GeneralHelpers
                 if (ray.isLastRay == false)
                 {
                     Gizmos.color = dotColor ?? Color.red;
-                    Gizmos.DrawCube(ray.EndPoint, Vector3.one * (ray.intensity * 2f));
+                    Gizmos.DrawSphere(ray.EndPoint, 1f * ray.intensity);
                 }
                 else
                 {
