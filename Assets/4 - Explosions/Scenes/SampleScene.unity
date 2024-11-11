@@ -10287,6 +10287,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maximumHealth: 100
   renderer: {fileID: 0}
+  text: {fileID: 0}
+  dmgFeedbackDuration: 0
   currentHealth: 0
 --- !u!1001 &1378984374
 PrefabInstance:
@@ -11833,6 +11835,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9199259041706122045, guid: 05646fb78696529419ca86c63c2260b5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
