@@ -80,8 +80,9 @@ public class InstantExplosion : MonoBehaviour
         
         for (int i = 0; i < forwardObstacles.Length; i++)
         {
-            var hit = forwardObstacles[i];
-            int inverseIndex = inverseHits.Length - 1 - i;
+            // 0 1 2
+            var hit = forwardObstacles[i]; // 0 1 2
+            int inverseIndex = inverseHits.Length - 1 - i;// 2 1 0  0 1 2
             var inverseHit = inverseHits[inverseIndex];
             
             if (hit.colliderInstanceID != inverseHit.colliderInstanceID)

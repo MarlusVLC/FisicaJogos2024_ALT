@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 5676299521895690822}
   - component: {fileID: 4290698688924916872}
   - component: {fileID: 653080801684753611}
+  - component: {fileID: 6058090575165400713}
   m_Layer: 6
   m_Name: Crate
   m_TagString: Untagged
@@ -284,8 +285,21 @@ MonoBehaviour:
   maximumHealth: 100
   renderer: {fileID: 5703442850299351321}
   text: {fileID: 5271016534291801458}
-  dmgFeedbackDuration: 1
+  dmgFeedbackDuration: 5
   currentHealth: 0
+--- !u!114 &6058090575165400713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4254629450113480429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ea2cc8528614c069f7cd461dd0ec98a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceMultiplier: 0.2
 --- !u!1 &8980847405449740049
 GameObject:
   m_ObjectHideFlags: 0

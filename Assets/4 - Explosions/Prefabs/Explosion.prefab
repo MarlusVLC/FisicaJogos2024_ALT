@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 8644138747386237918}
   - component: {fileID: 6676218829829049595}
   - component: {fileID: 4527802245403769566}
+  - component: {fileID: -342307285484450317}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: Untagged
@@ -177,7 +178,7 @@ MonoBehaviour:
       outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0.5
+      value: 0
       inSlope: 0.14777239
       outSlope: 0.14777239
       tangentMode: 0
@@ -191,7 +192,7 @@ MonoBehaviour:
   showLogs: 1
   showForceRays: 1
   showDamageRays: 1
-  showObstacleSpheres: 0
+  showObstacleSpheres: 1
 --- !u!82 &4527802245403769566
 AudioSource:
   m_ObjectHideFlags: 0
@@ -203,7 +204,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 01a8ed8e9b6b21c41b4f62d4f4d7b73e, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -288,3 +289,44 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-342307285484450317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8633886683358694484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2fa77ede23b45508b32c06b4d6c8c25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 01a8ed8e9b6b21c41b4f62d4f4d7b73e, type: 3}
+  soundAttenuationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0.14777239
+      outSlope: 0.14777239
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.16494799
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  radius: 30
+  obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 128
