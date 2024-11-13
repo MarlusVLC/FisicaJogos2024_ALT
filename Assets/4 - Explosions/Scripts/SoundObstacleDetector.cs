@@ -80,29 +80,13 @@ namespace _4___Explosions.Scripts
                         new UnityException("Colliders should be detected in the same object in the inverse order!"));
                 }
 
-                // if (i+1 < forwardObstacles.Length && showObstacleSpheres)
-                // {
-                //     TryAddDebugRays(inverseHit.point, forwardObstacles[i+1].point, false, force, damage);
-                // }
                 if (hit.collider.TryGetComponent(out Obstacle obstacle) == false)
                     continue;
                 var obstacleSpaceCovering = Vector3.Distance(hit.point, inverseHit.point);
                 float finalMultiplier = obstacle.ForceMultiplier / (obstacleSpaceCovering + 1);
                 volume *= finalMultiplier;
-                // force *= finalMultiplier;
-                // damage *= finalMultiplier;
-
-                // if (i == 0 && showObstacleSpheres)
-                //     TryAddDebugRays(transform.position, hit.point, false, force, damage);
-                // if (inverseIndex == 0)
-                // {
-                //     TryAddDebugRays(inverseHit.point, target.transform.position, true, force, damage);
-                // }
-                //[Origin, forward[0],        inverse[^1], forward[1],            inverse[^2], forward[2],         inverse[0], target]
-
             }
             audioSource.volume = volume;
-
         }
     }
 }

@@ -26,6 +26,9 @@ public class InstantExplosion : MonoBehaviour
     private readonly List<ModulatedRay> _debugForceRays = new();
     private readonly List<ModulatedRay> _debugDamageRays = new();
     
+    public LayerMask ObstacleLayers => obstacleLayers;
+    public float Radius => radius;
+    
     private void Start()
     {
         visual.transform.localScale = Vector3.one * (radius * 2);
