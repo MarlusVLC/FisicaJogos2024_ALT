@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: -342307285484450317}
   - component: {fileID: 4527802245403769566}
   - component: {fileID: 915585479865609141}
+  - component: {fileID: 9157732798979859801}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: Untagged
@@ -192,9 +193,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   maximumDamage: 100
   showLogs: 0
-  showForceRays: 1
+  showForceRays: 0
   showDamageRays: 1
-  showObstacleSpheres: 1
+  showObstacleSpheres: 0
 --- !u!114 &-342307285484450317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +237,7 @@ MonoBehaviour:
   obstacleLayers:
     serializedVersion: 2
     m_Bits: 128
+  lowPassCutOffRate: 20000
 --- !u!82 &4527802245403769566
 AudioSource:
   m_ObjectHideFlags: 0
@@ -255,9 +257,9 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 1.1
   MinDistance: 0
-  MaxDistance: 22.5
+  MaxDistance: 30
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -292,7 +294,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.627
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -342,19 +344,44 @@ AudioReverbFilter:
   m_Enabled: 1
   m_DryLevel: 0
   m_Room: -1000
-  m_RoomHF: -698
-  m_DecayTime: 7.24
-  m_DecayHFRatio: 0.33
-  m_ReflectionsLevel: -1166
-  m_ReverbLevel: 16
-  m_ReverbDelay: 0.03
-  m_Diffusion: 100
+  m_RoomHF: -3300
+  m_DecayTime: 1.49
+  m_DecayHFRatio: 0.54
+  m_ReflectionsLevel: -2560
+  m_ReverbLevel: -229
+  m_ReverbDelay: 0.088
+  m_Diffusion: 79
   m_Density: 100
   m_HFReference: 5000
   m_RoomLF: 0
   m_LFReference: 250
   m_ReflectionsDelay: 0
-  m_ReverbPreset: 10
+  m_ReverbPreset: 16
+--- !u!169 &9157732798979859801
+AudioLowPassFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8633886683358694484}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_LowpassResonanceQ: 1
+  lowpassLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &8703660284003571161
 PrefabInstance:
   m_ObjectHideFlags: 0

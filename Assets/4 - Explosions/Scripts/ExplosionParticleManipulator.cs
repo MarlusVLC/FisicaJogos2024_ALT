@@ -19,8 +19,6 @@ public class ExplosionParticleManipulator : MonoBehaviour
 
     private void Start()
     {
-        //https://docs.unity3d.com/ScriptReference/ParticleSystem.TriggerModule.AddCollider.html
-        //https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnParticleTrigger.html
         _targetColliders = Physics.OverlapSphere(transform.position, explosion.Radius, explosion.ObstacleLayers);
         var triggerModule = ps.trigger;
         Array.ForEach(_targetColliders, c => triggerModule.AddCollider(c));
@@ -28,13 +26,14 @@ public class ExplosionParticleManipulator : MonoBehaviour
     
     private void OnParticleTrigger()
     {
+        //https://docs.unity3d.com/ScriptReference/ParticleSystem.TriggerModule.AddCollider.html
+        //https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnParticleTrigger.html
         int numParticles = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Inside, _particlesList, out _triggerColliderData);
-        Debug.Log(numParticles);
         for (int i = 0; i < numParticles; i++)
         {
             var obstacle = _triggerColliderData.GetCollider(i, 0).GetComponent<Obstacle>();
             var particle = _particlesList[i];   
-            particle.remainingLifetime *= obstacle.ForceMultiplier * 1.5f;
+            particle.remainingLifetime *= obstacle.ForceMultiplier;
             _particlesList[i] = particle;
         }
         ps.SetTriggerParticles(ParticleSystemTriggerEventType.Inside, _particlesList);

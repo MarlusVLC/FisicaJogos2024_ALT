@@ -10,13 +10,18 @@ namespace _4___Explosions.Scripts
         [SerializeField] private AnimationCurve soundAttenuationCurve;
         [SerializeField] private float radius;
         [SerializeField] private LayerMask obstacleLayers;
+        [SerializeField] private float lowPassCutOffRate;
 
         private AudioSource audioSource;
         private AudioListener listener;
+        private AudioLowPassFilter lowPassFilter;
+        private float maxCutoffFrequency;
 
         private void Awake()
         {
             audioSource = GetComponent<AudioSource>();
+            lowPassFilter = GetComponent<AudioLowPassFilter>();
+            maxCutoffFrequency = lowPassFilter.cutoffFrequency; 
             audioSource.PlayOneShot(clip);
         }
 
@@ -27,11 +32,14 @@ namespace _4___Explosions.Scripts
 
         private void Update()
         {
-            ExecuteSound();
+            if (audioSource.isPlaying)
+                ExecuteSound();
         }
 
         private void ExecuteSound()
         {
+            float totalDiffractionEffect = 1f;
+            
             ModulatedRay ray = new ModulatedRay(transform.position, listener.transform.position);
             Vector3 direction = ray.direction;
             float distance = ray.length;
@@ -68,6 +76,7 @@ namespace _4___Explosions.Scripts
                     $"Forward raycasts quantity = {forwardObstacles.Length} | Inverse quantity = {inverseHits.Length}");
             }
 
+            var cutOffFrequency = maxCutoffFrequency;
             for (int i = 0; i < forwardObstacles.Length; i++)
             {
                 var hit = forwardObstacles[i];
@@ -83,10 +92,18 @@ namespace _4___Explosions.Scripts
                 if (hit.collider.TryGetComponent(out Obstacle obstacle) == false)
                     continue;
                 var obstacleSpaceCovering = Vector3.Distance(hit.point, inverseHit.point);
-                float finalMultiplier = obstacle.ForceMultiplier / (obstacleSpaceCovering + 1);
-                volume *= finalMultiplier;
+                float frequencyReduction = obstacle.ForceMultiplier / Mathf.Max(obstacleSpaceCovering, 1);
+                Debug.Log(frequencyReduction);
+                cutOffFrequency -= (1-frequencyReduction) * lowPassCutOffRate;
+                volume *= frequencyReduction;
             }
-            audioSource.volume = volume;
+            ApplyLowPassFilter(cutOffFrequency);
+            audioSource.volume = totalDiffractionEffect;
+        }
+
+        private void ApplyLowPassFilter(float cutOffFrequency)
+        {
+            lowPassFilter.cutoffFrequency = Mathf.Clamp(cutOffFrequency, 500, maxCutoffFrequency);
         }
     }
 }

@@ -99,12 +99,16 @@ public class InstantExplosion : MonoBehaviour
             if (hit.collider.TryGetComponent(out Obstacle obstacle) == false)
                 continue;
             var obstacleSpaceCovering = Vector3.Distance(hit.point, inverseHit.point);
-            float finalMultiplier = obstacle.ForceMultiplier / (obstacleSpaceCovering + 1);
+            float finalMultiplier = obstacle.ForceMultiplier / Mathf.Max(obstacleSpaceCovering, 1);
             force *= finalMultiplier;
             damage *= finalMultiplier;
-            
+
             if (i == 0 && showObstacleSpheres)
-                TryAddDebugRays(transform.position, hit.point, false, force, damage);
+            {
+                float resultantForce = forceAttenuationCurve.Evaluate(hit.distance) * maximumForce;
+                float resultantDamage = forceAttenuationCurve.Evaluate(hit.distance) * maximumDamage;
+                TryAddDebugRays(transform.position, hit.point, false, resultantForce, resultantDamage);
+            }
             if (inverseIndex == 0)
             {
                 TryAddDebugRays(inverseHit.point, target.transform.position, true, force, damage);
@@ -141,7 +145,7 @@ public class InstantExplosion : MonoBehaviour
             Destroy(visual);
         }
 
-        if (time <= -2f)
+        if (time <= -5f)
         {
             Destroy(gameObject);
         }

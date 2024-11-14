@@ -11,7 +11,7 @@ public class Weapon : MonoBehaviour
             return;
         }
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.Space))
         {
             Instantiate(_object, transform.position, transform.rotation);
         }
